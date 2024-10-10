@@ -1,0 +1,92 @@
+services:
+  karma8-apiserver:
+    image: karma8-apiserver
+    container_name: karma8-apiserver
+    ports:
+      - "80:80"
+      - "6565:6565"
+    restart: on-failure
+    networks:
+      - karma8
+
+  karma8-bucketserver-1:
+    image: karma8-bucketserver
+    ports:
+      - "6571:6571"
+    volumes:
+      - ./fragments-1:/fragments
+    restart: on-failure
+    command:
+      - "-api-server=karma8-apiserver:6565"
+      - "-address=karma8-bucketserver-1:6571"
+    networks:
+      - karma8
+
+  karma8-bucketserver-2:
+    image: karma8-bucketserver
+    ports:
+      - "6572:6571"
+    volumes:
+      - ./fragments-2:/fragments
+    restart: on-failure
+    command:
+      - "-api-server=karma8-apiserver:6565"
+      - "-address=karma8-bucketserver-2:6572"
+    networks:
+      - karma8
+
+  karma8-bucketserver-3:
+    image: karma8-bucketserver
+    ports:
+      - "6573:6571"
+    volumes:
+      - ./fragments-3:/fragments
+    restart: on-failure
+    command:
+      - "-api-server=karma8-apiserver:6565"
+      - "-address=karma8-bucketserver-3:6572"
+    networks:
+      - karma8
+
+  karma8-bucketserver-4:
+    image: karma8-bucketserver
+    ports:
+      - "6574:6571"
+    volumes:
+      - ./fragments-4:/fragments
+    restart: on-failure
+    command:
+      - "-api-server=karma8-apiserver:6565"
+      - "-address=karma8-bucketserver-4:6572"
+    networks:
+      - karma8
+
+  karma8-bucketserver-5:
+    image: karma8-bucketserver
+    ports:
+      - "6575:6571"
+    volumes:
+      - ./fragments-5:/fragments
+    restart: on-failure
+    command:
+      - "-api-server=karma8-apiserver:6565"
+      - "-address=karma8-bucketserver-5:6572"
+    networks:
+      - karma8
+
+  karma8-bucketserver-6:
+    image: karma8-bucketserver
+    ports:
+      - "6576:6571"
+    volumes:
+      - ./fragments-6:/fragments
+    restart: on-failure
+    command:
+      - "-api-server=karma8-apiserver:6565"
+      - "-address=karma8-bucketserver-6:6572"
+    networks:
+      - karma8
+
+networks:
+  karma8:
+    driver: bridge

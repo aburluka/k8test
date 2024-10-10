@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package bucket;
+
+option go_package = "./;bucket";
+
+message WsFileInfo {
+    int64 size = 1;
+}
+
+message RegisterBucketRequest {
+    string address = 1;
+}
+
+message RegisterBucketResponse {
+}
+
+service ApiService {
+    rpc RegisterBucket(RegisterBucketRequest) returns (RegisterBucketResponse) {
+    }
+}
+
+message Chunk {
+    bytes data = 1;
+}
+
+message UploadChunk {
+    string filename = 1;
+    uint32 fragment = 2;
+    Chunk  chunk = 3;
+}
+
+message UploadResponse {
+}
+
+message DownloadRequest {
+    string filename = 1;
+    uint32 fragment = 2;
+}
+
+message DeleteFragmentRequest {
+    string filename = 1;
+    uint32 fragment = 2;
+}
+
+message DeleteFragmentResponse {
+}
+
+service BucketService {
+  rpc UploadChunks(stream UploadChunk) returns (UploadResponse) {
+  }
+
+  rpc DownloadChunks(DownloadRequest) returns (stream Chunk) {
+  }
+
+  rpc DeleteFragment(DeleteFragmentRequest) returns (DeleteFragmentResponse) {
+  }
+}
